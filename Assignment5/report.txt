@@ -1,0 +1,79 @@
+a. 	One of the notable obstacles I had to overcome was in my rate function, where my approach required
+	me to split up the words in document into a 2d array of cstrings. This was complex because I also had
+	to remove unwanted characters and deal with different sizes of spaces. The hardest part was probably
+	keeping track of the zero byte at the end of the cstring. I had many issues with this while developing
+	my solution, which would result in weird errors when I performed operations on my 2d array. Eventually,
+	I was able to figure this out.
+
+b. 	makeProper 
+		create an large array to hold flags to indicate which values should be removed
+		loop over all the words in word1 and word2
+			flag the non alpha ones
+			convert the word to lowercase
+		loop over all the words in word1 and word2
+			flag words that are zero 
+			flag negative separations
+		loop over the patterns 
+			loop over the patterns
+				if a duplicate pattern is found
+					save the larger of separations 
+					flag pattern
+		remove bad elements from word1, word2, and separations based on if they are flagged
+		return the number of elements remaining
+					
+	rate
+		create a new cstring to hold the cleaned up document
+		copy document into new document and flag special characters
+		remove flagged values
+		create 2d array of cstring to hold individual words
+		loop over the new document
+			append elements of document to the cstring
+			if space character found
+				append zero byte to end of cstring
+				move to the next word in the 2d array
+		loop over each pattern
+			loop over the words in the 2d array
+				if the word matches a word in word1
+					see if word2 shows appears within the distance from word1 
+						increment success count
+		return number of successes 
+
+c. 	test cases for int makeProper(char word1[][MAX_WORD_LENGTH+1], char word2[][MAX_WORD_LENGTH+1], 
+			int separation[], int nPatterns)
+	makeProper("","",0,0) - empty case
+	makeProper("","",0,1) - empty words, one pattern
+	makeProper({"mad", "deranged", "NEFARIOUS", "half-witted", "robot", "plot", "have", "NeFaRiOuS"},
+		{"scientist", "robot", "PLOT", "assistant", "deranged", "Nefarious", "mad", "pLoT"},{1,3,0,2,1,0,12,0},8) - given test case
+	makeProper({"mad", "deraAnged", "NE$ARIOUS", "half-witted", "robot", "plot", "have", "NeFaRiOuS"},
+		{"scientist", "robot", "PLOT", "assistant", "deranged", "Nefarious", "mad", "pLoT"},{1,3,0,2,1,0,12,0},8) - special characters
+	makeProper({"mad", "deranged", "NEFARIOUS", "half-witted", "robot", "plot", "have", "NeFaRiOuS"},
+		{"scientist", "robot", "PLOT", "assistant", "deranged", "Nefarious", "mad", "pLoT"},{1,-3,0,2,-1,0,12,0},8) - negative separations
+	makeProper({"", "deranged", "NEFARIOUS", "", "robot", "plot", "have", "NeFaRiOuS"},
+		{"", "robot", "PLOT", "assistant", "", "Nefarious", "mad", "pLoT"},{1,3,0,2,1,0,12,0},8) - missing some words
+
+	test cases for int rate(const char document[], const char word1[][MAX_WORD_LENGTH+1], 
+			const char word2[][MAX_WORD_LENGTH+1], const int separation[], int nPatterns)
+	const int TEST1_NRULES = 0;
+	char test1w1[TEST1_NRULES][MAX_WORD_LENGTH + 1] = {"mad",       "deranged", "nefarious", "have"};
+	char test1w2[TEST1_NRULES][MAX_WORD_LENGTH + 1] = {"scientist", "robot",    "plot",      "mad"};
+	int test1dist[TEST1_NRULES] = { 1,           3,          0,           12};
+	rate("The mad UCLA scientist unleashed    a deranged robot.", test1w1, test1w2, test1dist, TEST1_NRULES) - no interesting elements to be looked at
+	const int TEST1_NRULES = 0;
+	char test1w1[TEST1_NRULES][MAX_WORD_LENGTH + 1] = {};
+	char test1w2[TEST1_NRULES][MAX_WORD_LENGTH + 1] = {};
+	int test1dist[TEST1_NRULES] = {};
+	rate("The mad UCLA scientist unleashed    a deranged robot.", test1w1, test1w2, test1dist, TEST1_NRULES) - empty word1 and word2 and separation arrays	
+	const int TEST1_NRULES = 4;
+	char test1w1[TEST1_NRULES][MAX_WORD_LENGTH + 1] = {"mad",       "deranged", "nefarious", "have"};
+	char test1w2[TEST1_NRULES][MAX_WORD_LENGTH + 1] = {"scientist", "robot",    "plot",      "mad"};
+	int test1dist[TEST1_NRULES] = { 1,           3,          0,           12};
+	rate("", test1w1, test1w2, test1dist, TEST1_NRULES) - empty document
+	rate("mad", test1w1, test1w2, test1dist, TEST1_NRULES) - one-word document
+	rate("mAd", test1w1, test1w2, test1dist, TEST1_NRULES) - different case
+	rate("The mad UCLA scientist unleashed    a deranged robot.", test1w1, test1w2, test1dist, TEST1_NRULES) - given test case
+	rate("**** 2018 ****", test1w1, test1w2, test1dist, TEST1_NRULES) - given test case
+	rate("  That plot: NEFARIOUS!", test1w1, test1w2, test1dist, TEST1_NRULES) - given test case
+	rate("deranged deranged robot deranged robot robot", test1w1, test1w2, test1dist, TEST1_NRULES) - given test case
+	rate("That scientist said two mad scientists suffer from deranged-robot fever.", test1w1, test1w2, test1dist, TEST1_NRULES) - given test case
+
+

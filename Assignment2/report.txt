@@ -1,0 +1,47 @@
+For this project, one of the key obstacles was learning how to run my program on the Linux machines. This was very important because I got
+to use the sample testing script that is similar to the one that will be used to grade my program. In order to do this, I had to learn how 
+to use WinSCP and Putty. Another significant obstacle I had to overcome was identifying all of the different test cases and making sure my
+program could run them.
+
+(startOdo, endOdo, days, name, luxury, month)
+(-10, 100, 1, abc, y, 1)	startOdo negative 
+(-10, -20, 1, abc, y, 1)	startOdo negative and endOdo < startOdo, should get startOdo error
+(-10, 40, -1, abc, y, 1)	startOdo negative and rentalDays negative, should get startOdo error
+(-10, 40, 4, , y, 1)		startOdo negative and customerName empty, should get startOdo error
+(-10, 40, 4, abc, yes, 1)	startOdo negative and isLuxury not "y" or "n", should get startOdo error
+(-10, 40, 4, abc, y, 14)	startOdo negative and month invalid, should get startOdo error
+(100, 0, 1, abc, y, 1)		endOdo < startOdo 
+(100, 0, -1, abc, y, 1)		endOdo < startOdo and rentalDays negative, should get endOdo < startOdo error
+(100, 0, 1, , y, 1)		endOdo < startOdo and customerName empty, should get endOdo < startOdo error
+(100, 0, 1, abc, yes, 1)	endOdo < startOdo and isLuxury not "y" or "n", should get endOdo < startOdo error
+(100, 0, 1, abc, y, 14)		endOdo < startOdo and month invalid, should get endOdo < startOdo error
+(10, 100, -3, abc, y, 1)	rentalDays negative
+(10, 100, -3, , y, 1)		rentalDays negative and customerName empty, should get rentalDays error
+(10, 100, -3, abc, yes, 1)	rentalDays negative and isLuxury not "y" or "n", should get rentalDays error
+(10, 100, -3, abc, y, 14)	rentalDays negative and month invalid, should get rentalDays error
+(10, 100, 3, , y, 1)		customerName empty
+(10, 100, 3, , yes, 1)		customerName empty and isLuxury not "y" or "n", should get customerName error
+(10, 100, 3, , yes, 14)		customerName empty and month invalid, should get customerName error
+(10, 100, 3, abc, yes, 1)	isLuxury not "y" or "n"
+(10, 100, 3, abc, yes, 14)	isLuxury not "y" or "n" and month invalid, should get isLuxury error
+(10, 100, 2, abc, y, 0)		startMonth < 1
+(10, 100, 2, abc, y, 1)		startMonth in winter
+(10, 100, 2, abc, y, 3)		startMonth in March (edge case)
+(10, 100, 2, abc, y, 5)		startMonth in non-winter
+(10, 100, 2, abc, y, 13)	startMonth > 12
+(100, 100, 2, abc, y, 5)	milesDriven = 0, luxury
+(100, 150, 2, abc, y, 5)	milesDriven less than 100, luxury
+(100, 200, 2, abc, y, 5)	milesDriven = 100, luxury
+(100, 220, 2, abc, y, 5)	milesDriven between 100 and 400 in non-winter, luxury
+(100, 220, 2, abc, y, 12)	milesDriven between 100 and 400 in winter, luxury
+(100, 500, 2, abc, y, 5)	milesDriven = 400, luxury
+(100, 550, 2, abc, y, 5)	milesDriven greater than 400, luxury
+(100, 100, 2, abc, n, 5)	milesDriven = 0, non-luxury
+(100, 150, 2, abc, n, 5)	milesDriven less than 100, non-luxury
+(100, 200, 2, abc, n, 5)	milesDriven = 100, non-luxury
+(100, 220, 2, abc, n, 5)	milesDriven between 100 and 400 in non-winter, non-luxury
+(100, 220, 2, abc, n, 12)	milesDriven between 100 and 400 in winter, non-luxury
+(100, 500, 2, abc, n, 5)	milesDriven = 400, non-luxury
+(100, 550, 2, abc, n, 5)	milesDriven greater than 400, non-luxury
+
+My program handles all of these test cases.

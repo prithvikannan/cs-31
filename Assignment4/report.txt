@@ -1,0 +1,65 @@
+a. For this project, some obstacles that I encountered was how to manipulate and parse through arrays correctly and keep track 
+of all of the edge cases. When building functions, I need to make sure that they will work with all possible inputs (besides passing 
+an array length longer than the array) and return the proper values. This is because these functions will be used by different programs 
+potentially, and the users of those programs need to have the flexibility to give a variety of inputs without breaking the function. 
+Additionally, I had the challenge of performing some of the functions without creating an additional array to save memory. 
+
+b. 	
+int appendToAll(string a[], int n, string value);
+	("", 0, "") - edge case with empty
+	("x,x,x", 2, "!") - check to see number of items modified
+	("x,x,x", 3, "!") - normal case
+	("ab,cd,ef", 3, "") - should not modify array
+	("ab,cd,ef", 0, "!!") - should not modify array
+	("x,x,x", -2, "!") - negative n value
+int lookup(const string a[], int n, string target);
+	("", 0, "") - edge case with empty
+	("ab,cd,ef", 3, "!!") - can't find the target string
+	("ab,!!,cd,!!,ef", 5, "!!") - multiple instances of target string
+	("a,b,GReg", 3, "gReG") - matching but wrong case
+	("x,x,x", -2, "!") - negative n value
+int positionOfMax(const string a[], int n);
+	("", 0) - edge case with empty
+	("abcd, abcd, efg", 3) - multiple max values
+	("abcd, xyz, efg", 3) - normal case
+	("abcd, xyz, efg", -3) - negative n value
+int rotateLeft(string a[], int n, int pos);
+	("", 0, 0) - edge case with empty
+	("x,x,x", -2, 2) - negative n value
+	("x,x,x", 2, -2) - negative pos value
+	("a,b,c,d", 4, 2) - normal case 
+int countRuns(const string a[], int n);
+	("", 0) - edge case with empty
+	("abcd, xyz, efg", 3) - normal case
+	("a,a,a,b,c,d,d,d,d", 9) - multiple runs 
+	("abcd, xyz, efg", -3) - negative n value
+int flip(string a[], int n);
+	("", 0) - edge case with empty
+	("abcd, xyz, efg", 3) - normal case
+	("abcd, xyz, efg", -3) - negative n value
+int differ(const string a1[], int n1, const string a2[], int n2);
+	("", 0, "", 0) - edge case with empty
+	("a,b", 0, "", 0) - edge case with empty
+	("", 0, "a,b", 0) - edge case with empty
+	("a,b,c", 3, "a,b,c", 3) - same arrays
+	("a,b,c,d,e,f,g", 7, "a,b,c", 3) - normal case
+int subsequence(const string a1[], int n1, const string a2[], int n2);
+	("", 0, "", 0) - edge case with empty
+	("a,b", 0, "", 0) - edge case with empty
+	("", 0, "a,b", 0) - edge case with empty
+	("a,b,c", 3, "a,b,c", 3) - same arrays
+	("a,b,c,d,e,f,g", 7, "a,b,c", 3) - normal case
+	("a,b,c", 3, "a,b,c,d,e,f,g", 7) - subsequence larger than array
+*int lookupAny(const string a1[], int n1, const string a2[], int n2);
+	("", 0, "", 0) - edge case with empty
+	("a,b", 0, "", 0) - edge case with empty
+	("", 0, "a,b", 0) - edge case with empty
+	("a,b,c,d,e,f,g", 7, "a,b,c", 3) - multiple matches
+	("a,b,c,d,e,f,g", 7, "a,y,z", 3) - normal case
+	("a,b,c,d,e,f,g", 7, "x,y,z", 3) - no matches
+int divide(string a[], int n, string divider);
+	("", 0, "") - edge case with empty
+	("", 0, "abc") - edge case with empty a
+	("a,a,a,b,c,d,d,d,d", 9, "") - empty divider
+	("a,a,a,b,c,d,d,d", 8, "$") - special character divider
+	("a,B,C,b,cX,dDF,Yd,dF", 8, "ac") - normal case

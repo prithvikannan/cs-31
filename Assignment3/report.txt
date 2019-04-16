@@ -1,0 +1,63 @@
+a. 	Some of the obstacles I had to overcome were figuring out how to separate parts of the poll data string into individual state forecasts,
+and then iterating over the state forecasts to find party results. Since party results could have been 1 or 2 digits, I could not use a
+traditional loop to find party results. 
+
+b. 	My program follows this algorithm:
+	
+	bool hasProperSyntax(string pollData) 
+
+	loop over the poll data string to select a particular state forecast by searching for the ',' repeatedly:		
+		check if all characters in a state forecast are letters or digits (not special characters or space)
+			if not return false
+		find the state code
+		check if valid state code
+			if not return false
+		loop over the state forecast to find the next party result by searching for the next letter repeatedly:
+			get a party result by extracting the substring between the current index and index of the next letter
+			check if the party result has a letter at the end
+				if not return false
+			check if the party result has 1 or 2 digits
+				if not return false
+	if the code gets this far, return true
+	
+	int tallySeats(string pollData, char party, int& seatTally) 
+
+	check if pollData has proper syntax
+		if not return 1
+	check if the party is a letter
+		if not return 2
+	start a counter for votes for that party
+	loop over the poll data string to select a particular state forecast by searching for the ',' repeatedly:		
+		loop over the state forecast to find the next party result by searching for the next letter repeatedly:
+			get a party result by extracting the substring between the current index and index of the next letter
+			check if the party result belongs to the chosen party
+				if it does, add votes to the counter
+	set seatTally to the value of the counter
+	return 0 to indicate good pollData and party
+
+c. 	I used the following data to test hasProperSyntax:
+	"" - empty string
+	"a" - bad state code
+	"1a" - missing state code
+	"CA" - valid state forecast
+	"CA5" - bad party result
+	"CA5D" - good party result
+	"CA54D" - space character
+	"CA5D5" - bad party result
+	"CA5D 5" - space character
+	"CA5D&	5" - random character
+	"CA5D123R" - 3 digits before letter
+	"CA5D5," - extra comma at end
+	",CA5D5" - extra comma at beginning
+	"CT5D,NY9R17D1I,VT,ne3r00D" - multiple state forecast
+	"KS4R, NV3D1R" - space between state forecast
+
+	I used the following data to test tallySeats
+	"CA5D123R", 'd', seats - bad pollData
+	"CA5D123R", '3', seats - bad party
+	"CA5D12R", 'R', seats - good input
+	"CA5D12R", 'r', seats - upper/lowercase
+	"CT5D,NY9R17D1I,VT,ne3r00D", 'r', seats - multiple state forecast
+	"CT5D,NY9R17D1I,VT,ne3r00D", 'g', seats - party not in pollData
+	"CT5i,co9R47c1w,VT,ca52c0D", 'c', seats - 'c' appears in state codes and party
+

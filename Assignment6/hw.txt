@@ -1,0 +1,169 @@
+1
+
+a.
+int main()
+{
+	int arr[3] = { 5, 10, 15 };
+	int* ptr = arr;
+
+	*ptr = 30;          // set arr[0] to 30
+	*(ptr + 1) = 20;	// set arr[1] to 20
+	ptr += 2;
+	*ptr = 10;			// set arr[2] to 10
+
+
+	while ((ptr-2) < arr+3)
+	{
+		cout << *(ptr-2) << endl;    // print values
+		ptr++;
+
+	}
+}
+b. findMax is given a copy of the pointer pToMax instead of having it passed by refence. To solve this, add the ampersand operator in the function signature.
+void findMax(int arr[], int n, int*& pToMax)
+{
+	if (n <= 0)
+		return;      // no items, no maximum!
+
+	pToMax = arr;
+
+	for (int i = 1; i < n; i++)
+	{
+		if (arr[i] > *pToMax)
+			pToMax = arr + i;
+	}
+}
+
+int main()
+{
+	int nums[4] = { 5, 3, 15, 6 };
+	int* ptr;
+
+	findMax(nums, 4, ptr);
+	cout << "The maximum is at address " << ptr << endl;
+	cout << "It's at position " << ptr - nums << endl;
+	cout << "Its value is " << *ptr << endl;
+}
+
+c. The pointer in the main function is not initialized to any value. This can be fixed by creating a variable with the start value and initializing the pointer to point to that variable.
+void computeCube(int n, int* ncubed)
+{
+	*ncubed = n * n * n;
+}
+
+int main()
+{
+	int num = 5;
+	int* ptr = &num;
+	computeCube(5, ptr);
+	cout << "Five cubed is " << *ptr << endl;
+}
+
+d. str1 and str2 are passed in as constant pointers, so those should be changed to not constant. Also, when comparing the characters and checking the while condition you need to dereference the pointers. The check for c strings ending at the same time can be skipped.
+// return true if two C strings are equal
+bool strequal(char str1[], char str2[])
+{
+	while (*str1 != 0 && *str2 != 0)
+	{
+		if (*str1 != *str2)  // compare corresponding characters
+			return false;
+		str1++;            // advance to the next character
+		str2++;
+	}
+	return true;   // both ended at same time?
+}
+
+int main()
+{
+	char a[15] = "Zhou";
+	char b[15] = "Zou";
+
+	if (strequal(a, b))
+		cout << "They're the same person!\n";
+}
+
+e. pointer is created to an array that only exists within the getPtrToArray function
+
+
+2. 
+
+a. double* cat;
+b. double mouse[5];
+c. cat = &mouse[4];
+d. *cat = 25;
+e. *(mouse+3) = 42;
+f. cat = cat - 3;
+g. cat[1] = 27;
+h. cat[0] = 54;
+i. bool b = (*cat == *(cat+1));
+j. bool d = (cat == mouse);
+
+3. 
+
+a.
+double mean(const double* scores, int numScores)
+{
+	const double* ptr = scores;
+	double tot = 0;
+	int index = 0;
+	while (index != numScores)
+	{
+		tot += *(ptr+index);
+		index++;
+	}
+	return tot / numScores;
+}
+
+b.
+const char* findTheChar(char* str, char chr)
+{
+	int k = 0;
+	while (*(str + k) != 0) {
+		if (*(str + k) == chr) {
+			return (str + k);
+		}
+		k++;
+	}
+	return nullptr;
+}
+
+c.
+const char* findTheChar(char* str, char chr)
+{
+	while (*str != 0) {
+		if (*str == chr) {
+			return (str);
+		}
+		str++;
+	}
+	return nullptr;
+}
+
+4. 
+
+3 – this means that the 5th index of the array is 3 elements away from the pointer, which is at the 2nd index.
+4 – value is initialized in the array and is swapped to index 0 with swap2.
+79 – value gets assigned to index 1, both swap functions do nothing to change it.
+-1 – value is assigned to pointer at start so index 0, then swapped to index 2 with swap2.
+9 – value is assigned to index 3 because it is 1 more than a pointer that points to the 2nd index.
+22 – value is assigned to index 4 and is not changed
+19 – value is assigned to index 5 and is not changed
+
+5. 
+
+void removeS(char* msg) {
+	while (*msg != 0) {
+		if (tolower(*msg) == 's') {
+			char* ptr;
+			for (ptr = msg; *ptr != 0; ptr++) {
+				*ptr = *(ptr + 1);
+			}
+			msg--;
+		}
+		msg++;
+	}
+}
+
+
+
+
